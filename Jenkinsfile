@@ -14,19 +14,19 @@ pipeline {
 
         stage('Build Project') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Build Docker Image (Jib)') {
             steps {
-                sh "mvn compile jib:dockerBuild -Dimage=${IMAGE_NAME}"
+                bat "mvn compile jib:dockerBuild -Dimage=${IMAGE_NAME}"
             }
         }
 
         stage('Run Docker Image (Optional)') {
             steps {
-                sh "docker run -d -p 8089:8089 ${IMAGE_NAME}"
+                bat "docker run -d -p 8089:8089 ${IMAGE_NAME}"
             }
         }
     }
