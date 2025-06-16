@@ -12,10 +12,16 @@ pipeline {
             }
         }
 
-        stage('Build Project') {
+        stage('Build') {
             steps {
                 bat 'mvn clean package -DskipTests'
             }
+        }
+
+        stage('Test') {
+             steps {
+                bat 'mvn test'
+             }
         }
 
         stage('Build Docker Image (Jib)') {
@@ -32,6 +38,9 @@ pipeline {
     }
 
     post {
+        success {
+            echo 'Pipeline success..'
+        }
         failure {
             echo 'Pipeline failed!'
         }
